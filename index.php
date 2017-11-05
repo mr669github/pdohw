@@ -19,11 +19,30 @@ $obj=new main();
 	    $dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	    //1. If connected print
 	    echo 'Connected successfully <br>';
+	    $this::testConn($dbconn);
         } 
     catch (PDOException $e) {
     //1. If not connected print	
 	echo 'Connection failed: ' . $e->getMessage() . '<br>';
       }
      }
+     //function to perform selection and display
+     public static function testConn($dbconn) 
+     {
+     try {
+     	  //2. Perform selection to search from accounts
+	      $stmt = $dbconn->prepare("SELECT * FROM accounts where id<6");
+	      $stmt->execute();
+	      $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+	      $result = $stmt->fetchAll();
+	     }
+	catch (PDOException $e) 
+	     {
+	     echo $sql . "<br>" . $e->getMessage();
+         }
+      }
+
+
+
    }
 ?>
